@@ -1,5 +1,7 @@
 # Database_lab_2
 
+# Demonstration: https://youtu.be/5dtAKkM5iZU
+
 ```sql
 create table "Album"
 (
