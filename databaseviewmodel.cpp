@@ -12,6 +12,11 @@ bool DataBaseViewModel::login(const QString &username, const QString &pass)
     return m_dataBaseModel->login(username, pass);
 }
 
+void DataBaseViewModel::createDatabase(const QString &name)
+{
+    m_dataBaseModel->createDatabase(name);
+}
+
 QObject* DataBaseViewModel::table() const
 {
     return m_dataBaseModel->model().data();
@@ -74,6 +79,11 @@ void DataBaseViewModel::remove(int headerId, const QString &val)
 void DataBaseViewModel::removeRow(int row)
 {
     m_dataBaseModel->removeRow(row);
+}
+
+void DataBaseViewModel::addColumn(const QString &name, const QString &type, const QString &flags)
+{
+    m_dataBaseModel->addColumn(name, type, flags);
 }
 
 void DataBaseViewModel::clearTable()

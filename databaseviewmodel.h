@@ -15,6 +15,7 @@ public:
     virtual ~DataBaseViewModel() {}
 
     Q_INVOKABLE bool login(const QString& username, const QString& pass);
+    Q_INVOKABLE void createDatabase(const QString& name);
 
     Q_INVOKABLE QObject* table() const;
     Q_INVOKABLE void setTable(const QString& tableName);
@@ -28,6 +29,7 @@ public:
     Q_INVOKABLE void find(int headerId, const QString& val);
     Q_INVOKABLE void remove(int headerId, const QString& val);
     Q_INVOKABLE void removeRow(int row);
+    Q_INVOKABLE void addColumn(const QString &name, const QString &type, const QString &flags);
     Q_INVOKABLE void clearTable();
     Q_INVOKABLE void updateTable();
 

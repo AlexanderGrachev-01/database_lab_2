@@ -20,6 +20,7 @@ public:
     bool setDatabase(const QString& tableName);
 
     void createDatabase(const QString& name);
+    //void createTable(const QString& name);
 
     bool addEmptyRow();
     bool changeCell(int row, int column, const QString& val);
@@ -28,6 +29,7 @@ public:
     void removeRow(int row);
     void clearTable();
     void updateTable();
+    void addColumn(const QString& name, const QString& type, const QString& flags);
 
     QSharedPointer<QSqlQueryModel> model();
     QStringList headers();

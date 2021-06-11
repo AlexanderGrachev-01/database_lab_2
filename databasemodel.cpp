@@ -169,13 +169,12 @@ void DataBaseModel::createDatabase(const QString &name)
 {
     QSqlQuery query(m_database);
     query.exec("CREATE DATABASE " + name + ";");
-
-    if (!m_database.open()) {
-        qWarning() << "Can not connect to the DB";
-    } else {
-        qDebug() << "Successfully connect to the " << m_database.databaseName();
-    }
 }
+
+//void DataBaseModel::createTable(const QString &name)
+//{
+
+//}
 
 bool DataBaseModel::addEmptyRow()
 {
@@ -210,6 +209,8 @@ bool DataBaseModel::changeCell(int row, int column, const QString& val)
     query.exec(q);
     if (query.lastError().type() == QSqlError::NoError)
         return true;
+    else
+        qWarning() << query.lastError().text();
     return false;
 
 }
@@ -261,6 +262,15 @@ void DataBaseModel::clearTable()
 void DataBaseModel::updateTable()
 {
     setTable(m_currentTable);
+}
+
+void DataBaseModel::addColumn(const QString &name, const QString &type, const QString &flags)
+{
+    QSqlQuery query(m_database);
+    query.exec("alter table " + m_currentTable + " add column " + name + " " + type + " default 0 " + flags + ";");
+    if (query.lastError().type() != QSqlError::NoError)
+        qWarning() << query.lastError().text();
+    updateTable();
 }
 
 QSharedPointer<QSqlQueryModel> DataBaseModel::model()

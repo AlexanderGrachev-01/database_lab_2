@@ -223,8 +223,9 @@ Window {
                             viewModel.dataBaseViewModel.setDatabase(this.text)
                             console.log("new headers:" + viewModel.dataBaseViewModel.headers())
 
-                            updateColumnLabels();
+                            updateColumnLabels()
                             updateTables()
+                            updateTable()
                         }
                     }
                 }
@@ -360,11 +361,6 @@ Window {
                 Layout.fillWidth: true
                 spacing: 25
 
-                Text {
-                    font.pixelSize: 14
-                    text: "Change cell value"
-                }
-
                 RowLayout {
                     Layout.fillHeight: true
                     Layout.fillWidth: true
@@ -373,7 +369,7 @@ Window {
                         id: newValue
                         Layout.fillHeight: true
                         Layout.fillWidth: true
-                        placeholderText: qsTr("New value")
+                        placeholderText: qsTr("New Cell Value")
                     }
                     PrimaryButton {
                         text: qsTr("Apply")
@@ -418,6 +414,90 @@ Window {
                         }
                     }
                 }
+
+                RowLayout {
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                    Layout.maximumHeight: 30
+
+                    TextField {
+                        id: dbName
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
+                        placeholderText: qsTr("Database Name")
+                    }
+
+                    PrimaryButton {
+                        text: qsTr("Create database")
+                        onClicked: {
+                            viewModel.dataBaseViewModel.createDatabase(dbName.text)
+                        }
+                    }
+                }
+
+                RowLayout {
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                    Layout.maximumHeight: 30
+
+                    TextField {
+                        id: tableName
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
+                        placeholderText: qsTr("Table Name")
+                    }
+
+                    PrimaryButton {
+                        text: qsTr("Create database")
+                        onClicked: {
+                            viewModel.dataBaseViewModel.createDatabase(dbName.text)
+                            updateDatabases()
+                        }
+                    }
+                }
+
+                RowLayout {
+                    id: addColumn
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                    Layout.maximumHeight: 30
+
+                    TextField {
+                        id: columnName
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
+                        placeholderText: qsTr("Column name")
+                    }
+
+                    ComboBox {
+                        id: type
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
+                        model: [
+                            "int",
+                            "varchar",
+                            "bool"
+                        ]
+                    }
+
+                    TextField {
+                        id: flags
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
+                        placeholderText: qsTr("Flags")
+                    }
+
+                    PrimaryButton {
+                        text: qsTr("Create column")
+                        onClicked: {
+                            viewModel.dataBaseViewModel.addColumn(columnName.text, type.currentValue, flags.text)
+                            updateColumnLabels()
+                            updateTable()
+                            updateTables()
+                        }
+                    }
+                }
+
             }
 
             ColumnLayout {
@@ -495,9 +575,6 @@ Window {
                         }
                     }
                 }
-
-
-
             }
         }
 
@@ -519,6 +596,11 @@ Window {
         tableView.model = []
         tableView.model = viewModel.dataBaseViewModel.table()
         viewModel.dataBaseViewModel.updateTable()
+    }
+
+    function updateDatabases() {
+        databases.model = []
+        databases.model = viewModel.dataBaseViewModel.databaseNames().length
     }
 
 }
