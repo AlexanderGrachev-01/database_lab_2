@@ -38,9 +38,6 @@ create table "Users"
 
 alter table "Users" owner to grachev_alex;
 
-create unique index users_login_uindex
-	on "Users" using ??? (login);
-
 
 INSERT INTO "Album"("name", "artist", "genre")
  VALUES ('Eternal Atake (Deluxe) - LUV vs. The World 2', 'Lil Uzi Vert', 'hip-hop'),
